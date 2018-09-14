@@ -1,12 +1,15 @@
 <template>
-    <drop class="drop" @drop="handleDrop">
-        <div class="drop-area"></div>
-    </drop>
+    <div>
+        <drop class="drop" @drop="handleDrop">
+            <div class="drop-area"></div>
+        </drop>
+    </div>
 </template>
 
 <script>
     import Drop from 'vue-drag-drop';
     export default {
+        name: 'DropArea',
         components: Drop,
         methods: {
             handleDrop(data) {
