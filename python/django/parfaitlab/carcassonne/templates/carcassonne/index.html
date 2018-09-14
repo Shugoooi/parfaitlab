@@ -1,0 +1,30 @@
+{% load render_bundle from webpack_loader %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<div id="app">
+<!--<dnd-grid-container></dnd-grid-container>-->
+<drag-image></drag-image>
+<drop-area></drop-area>
+</div>
+</body>
+
+<script type="text/javascript" src="/static/carcassonne/js/vue.js"></script>
+<script type="text/javascript" src="https://unpkg.com/vue-drag-drop@1.1.4/dist/vue-drag-drop.browser.js"></script>
+<!--<script src="https://unpkg.com/@dattn/dnd-grid@0.0.14/dist/dnd-grid.js"></script>-->
+<!--<script type="text/javascript" src="/static/carcassonne/js/bundle.js"></script>-->
+{% render_bundle 'main' %}
+</html>
+
+<style>
+<!--#app {-->
+    <!--position: absolute;-->
+    <!--top: 50%;-->
+    <!--left: 50%;-->
+<!--}-->
+</style>
