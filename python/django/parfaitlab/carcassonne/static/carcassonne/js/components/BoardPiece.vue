@@ -11,51 +11,18 @@
             :margin="margin"
             :bubbleUp="bubbleUp"
         >
+        <button @click="addDndBox">add box</button>
             <dnd-grid-box
-                boxId="settings"
-                dragSelector="div.card-header"
+                v-for="number in layout"
+                :boxId="number.id"
+                :key="number.id"
+                dragSelector="div"
             >
                 <div class="card demo-box">
                     <div class="card-header">
-                        Settings
+                        Box {{ number.id }}
                     </div>
-                    <div class="card-body">
-                        <div class="form-group row">
-                            <label for="settings-margin-input" class="col-sm-4 col-form-label">Margin</label>
-                            <div class="col-sm-8">
-                                <input class="form-control" type="number" v-model.number="margin" id="settings-margin-input">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="settings-grid-size-w-input" class="col-sm-4 col-form-label">Cell Size</label>
-                            <div class="col-sm-4">
-                                <input class="form-control" type="number" v-model.number="cellSize.w" id="settings-grid-size-w-input">
-                            </div>
-                            <div class="col-sm-4">
-                                <input class="form-control" type="number" v-model.number="cellSize.h">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="settings-bubble-up-input" class="col-sm-4 col-form-label">Bubble Up</label>
-                            <div class="col-sm-8">
-                                <input type="checkbox" v-model="bubbleUp" id="settings-bubble-up-input">
-                            </div>
-                        </div>
-                        <button class="btn btn-success" @click="boxCount++">Add Box</button>
-                        <button class="btn btn-danger" @click="boxCount = Math.max(0, boxCount-1)">Remove Box</button>
-                    </div>
-                </div>
-            </dnd-grid-box>
-            <dnd-grid-box
-                v-for="number in boxCount"
-                :boxId="number"
-                :key="number"
-                dragSelector="div.card-header"
-            >
-                <div class="card demo-box">
-                    <div class="card-header">
-                        Box {{ number }}
-                    </div>
+                <button @click="pinBox(number)">pin box</button>
                 </div>
             </dnd-grid-box>
         </dnd-grid-container>
@@ -85,8 +52,8 @@
                 maxColumnCount: 10,
                 maxRowCount: Infinity,
                 bubbleUp: false,
-                margin: 5,
-                boxCount: 4,
+                margin: 0,
+                boxCount: 5,
                 layout: [
                     {
                         id: 'settings',
@@ -95,8 +62,8 @@
                         position: {
                             x: 0,
                             y: 0,
-                            w: 4,
-                            h: 3
+                            w: 1,
+                            h: 1
                         }
                     },
                     {
@@ -104,9 +71,9 @@
                         hidden: false,
                         pinned: false,
                         position: {
-                            x: 4,
+                            x: 8,
                             y: 0,
-                            w: 2,
+                            w: 1,
                             h: 1
                         }
                     },
@@ -115,10 +82,10 @@
                         hidden: false,
                         pinned: false,
                         position: {
-                            x: 6,
+                            x: 2,
                             y: 0,
                             w: 1,
-                            h: 2
+                            h: 1
                         }
                     },
                     {
@@ -126,10 +93,10 @@
                         hidden: false,
                         pinned: false,
                         position: {
-                            x: 4,
+                            x: -1,
                             y: 1,
-                            w: 2,
-                            h: 3
+                            w: 1,
+                            h: 1
                         }
                     },
                     {
@@ -137,9 +104,9 @@
                         hidden: false,
                         pinned: false,
                         position: {
-                            x: 6,
-                            y: 2,
-                            w: 3,
+                            x: 1,
+                            y: 1,
+                            w: 1,
                             h: 1
                         }
                     }
@@ -156,6 +123,22 @@
         methods: {
             onLayoutUpdate (evt) {
                 this.layout = evt.layout
+            },
+            addDndBox () {
+                console.log('Start adding dnd box.')
+                this.boxCount++
+                this.layout.push({
+                    id: 5,
+                    position: {
+                        x: 2,
+                        y: 2,
+                        w: 1,
+                        h: 1
+                    }
+                })
+            },
+            pinBox (dndBox) {
+                dndBox["pinned"] = !dndBox["pinned"]
             }
         }
     }
