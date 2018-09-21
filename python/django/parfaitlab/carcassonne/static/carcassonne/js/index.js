@@ -9,6 +9,8 @@ Vue.component('board-piece', require('./components/BoardPiece.vue').default)
 Vue.component('drag-image', require('./components/DragImage.vue').default)
 Vue.component('drop-area', require('./components/DropArea.vue').default)
 Vue.component('carcassonne-piece', require('./components/CarcassonnePiece.vue').default)
+Vue.component('carcassonne-board', require('./components/CarcassonneBoard.vue').default)
+
 
 //new Vue({
 //  render(h) {
