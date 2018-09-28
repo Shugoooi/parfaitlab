@@ -1,6 +1,7 @@
 <template>
     <div class="carcassonne-board"
         :style="style"
+        draggable="true" 
     >
         <carcassonne-piece
             v-for="piece in pieces"
