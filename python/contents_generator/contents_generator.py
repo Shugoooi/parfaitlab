@@ -1,4 +1,4 @@
-#/usr/bin/python
+# /usr/bin/python
 # -*- coding:utf-8 -*-
 
 """
@@ -7,26 +7,21 @@
 filename = 'resources/test.md'
 
 # MD読み込み
-doc = open(filename, 'rt', encoding='utf-8')
-doc.seek(0)
-lines = doc.readlines()
+with open(filename, 'r', encoding='utf-8') as md:
+    lines = md.readlines()
 
 # MDを目次以前と目次以降に分離
-before = lines[:lines.index('## 目次\n')+1]
-lines = lines[lines.index('## 目次\n')+1:] # 目次以降を対象に目次生成
-if lines[1] is not '\n' : # 既に目次が生成されている、あるいは予期せぬエラー
-	raise Exception
+index = lines.index('## 目次\n')+1
+if lines[index] != '\n':  # 既に目次が生成されている、あるいは予期せぬエラー
+    raise Exception("目次生成済、あるいは目次と次のコンテンツの間に空行を入れてください")
 
 # 仕様に従って目次を生成
-contents = filter(lambda x: x.startswith('### ')|x.startswith('## '), lines)
-contents = map(lambda x: x.replace('### ', '\t* '), contents)
-contents = map(lambda x: x.replace('## ', '0. '), contents)
-contents = list(contents)
-doc.close()
+contents = (x for x in lines[index:] if x.startswith('### ') or x.startswith('## '))
+contents = (x.replace('### ', '\t* ') for x in contents)
+contents = [x.replace('## ', '0. ') for x in contents]
+contents.append('\n')
+lines[index] = ''.join(contents)
 
 # 書き込み
-doc = open(filename, 'wt', encoding='utf-8')
-doc.writelines(before)
-doc.writelines(contents)
-doc.writelines(lines)
-doc.close()
+with open('resources/output.md', 'w', encoding='utf-8') as md:
+    md.writelines(lines)
